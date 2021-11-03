@@ -13,25 +13,20 @@ class ResultViewController: UIViewController {
     @IBOutlet var resultTypeLabelOutlet: UILabel!
     @IBOutlet var definitionOutlet: UILabel!
     
+    // MARK: - Public Properties
     var answerChosen: [Answer]!
 
-    // MARK: - Life circle methods
+    // MARK: - Life Circle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(answerChosen)
         self.navigationItem.setHidesBackButton(true, animated: false)
-        let prevailingType = getAnimalType()
+        let prevailingType = getPrevailingType()
         resultTypeLabelOutlet.text = "\(prevailingType) - \(prevailingType.rawValue)"
         definitionOutlet.text = prevailingType.definition
     }
 
-    // 1. Передать сюда массив с ответами
-    // 2. Определить наиболее часто встречающийся тип животного
-    // 3. Отобразить результаты в соответствии с этим животным
-    // 4. Избавиться от кнопки возврата назад на экране результатов
-    
-    // MARK: - Private methods
-    private func getAnimalType() -> AnimalType {
-        return .cat
+    // MARK: - Private Methods
+    private func getPrevailingType() -> AnimalType {
+        answerChosen.map{$0.type}.reduce(into: [:]) { counts, answer in counts[answer, default: 0] += 1 }.sorted{$0.value > $1.value}.first!.key
     }
 }

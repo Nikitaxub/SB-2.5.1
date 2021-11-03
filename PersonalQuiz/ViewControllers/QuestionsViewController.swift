@@ -8,14 +8,6 @@
 import UIKit
 
 class QuestionsViewController: UIViewController {
-
-    private let questions = Question.getQuestions()
-    private var questionIndex = 0
-    private var currentAnswers: [Answer] {
-        questions[questionIndex].answers
-    }
-    private var answerChosen: [Answer] = []
-    
     // MARK: - IB Outlets
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var questionProgressView: UIProgressView!
@@ -36,8 +28,16 @@ class QuestionsViewController: UIViewController {
             rangedSlider.value = answerCount / 2
         }
     }
+
+    // MARK: - Private Properties
+    private let questions = Question.getQuestions()
+    private var questionIndex = 0
+    private var currentAnswers: [Answer] {
+        questions[questionIndex].answers
+    }
+    private var answerChosen: [Answer] = []
     
-    // MARK: - Life circle methods
+    // MARK: - Life Circle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -49,6 +49,7 @@ class QuestionsViewController: UIViewController {
         resultViewController.answerChosen = answerChosen
     }
     
+    // MARK: - IB Actions
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         guard let buttonIndex = singleButtons.firstIndex(of: sender) else { return }
         let currentAnswer = currentAnswers[buttonIndex]
@@ -74,7 +75,6 @@ class QuestionsViewController: UIViewController {
 }
 
 // MARK: Private Methods
-
 extension QuestionsViewController {
     private func updateUI() {
         

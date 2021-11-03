@@ -81,3 +81,6 @@ extension Question {
     }
 }
 
+extension Answer: Hashable {
+    
+}
