@@ -19,7 +19,7 @@ class ResultViewController: UIViewController {
     // MARK: - Life Circle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.setHidesBackButton(true, animated: false)
+        navigationItem.setHidesBackButton(true, animated: false)
         let prevailingType = getPrevailingType()
         resultTypeLabelOutlet.text = "\(prevailingType) - \(prevailingType.rawValue)"
         definitionOutlet.text = prevailingType.definition
@@ -27,6 +27,8 @@ class ResultViewController: UIViewController {
 
     // MARK: - Private Methods
     private func getPrevailingType() -> AnimalType {
-        answerChosen.map{$0.type}.reduce(into: [:]) { counts, answer in counts[answer, default: 0] += 1 }.sorted{$0.value > $1.value}.first!.key
+        let typesOfChosenAnswer = answerChosen.map{$0.type}
+        let typeCount = typesOfChosenAnswer.reduce(into: [:]) { counts, answer in counts[answer, default: 0] += 1 }
+        return typeCount.sorted{$0.value > $1.value}.first!.key
     }
 }
